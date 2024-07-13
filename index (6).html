@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waseem Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Silkscreen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+        .display {
+            background-color: #222;
+            color: #fff;
+            font-size: 2rem;
+            text-align: right;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+        .button {
+            background-color: #eee;
+            border: 1px solid #ddd;
+            font-size: 1.5rem;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .button.operator {
+            background-color: #ff9500;
+            color: #fff;
+        }
+        .button.zero {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <div class="button" onclick="appendNumber('7')">7</div>
+            <div class="button" onclick="appendNumber('8')">8</div>
+            <div class="button" onclick="appendNumber('9')">9</div>
+            <div class="button operator" onclick="appendNumber('/')">÷</div>
+
+            <div class="button" onclick="appendNumber('4')">4</div>
+            <div class="button" onclick="appendNumber('5')">5</div>
+            <div class="button" onclick="appendNumber('6')">6</div>
+            <div class="button operator" onclick="appendNumber('*')">×</div>
+
+            <div class="button" onclick="appendNumber('1')">1</div>
+            <div class="button" onclick="appendNumber('2')">2</div>
+            <div class="button" onclick="appendNumber('3')">3</div>
+            <div class="button operator" onclick="appendNumber('-')">-</div>
+
+            <div class="button zero" onclick="appendNumber('0')">0</div>
+            <div class="button" onclick="appendNumber('.')">.</div>
+            <div class="button operator" onclick="appendNumber('+')">+</div>
+
+            <div class="button" onclick="clearDisplay()">C</div>
+            <div class="button" onclick="deleteNumber()">DEL</div>
+            <div class="button operator" onclick="calculate()">=</div>
+        </div>
+    </div>
+
+    <script>
+        let currentExpression = '';
+
+        const display = document.getElementById('display');
+
+        function appendNumber(number) {
+            if (number === '.' && currentExpression.endsWith('.')) return;
+            currentExpression += number;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            display.innerText = currentExpression || '0';
+        }
+
+        function calculate() {
+            try {
+                currentExpression = eval(currentExpression).toString();
+            } catch {
+                currentExpression = 'Error';
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentExpression = '';
+            updateDisplay();
+        }
+
+        function deleteNumber() {
+            currentExpression = currentExpression.toString().slice(0, -1);
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
